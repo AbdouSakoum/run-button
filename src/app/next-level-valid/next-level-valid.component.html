@@ -1,0 +1,12 @@
+<section class="signup-form">
+  <form fxLayout="column" fxLayoutAlign="center center" [formGroup]="myForm">
+    <mat-form-field>
+      <input type="text" matInput placeholder="to do" formControlName="toDo">
+    </mat-form-field>
+    <button type="submit" mat-raised-button class="button"
+         [ngClass]="myForm.get('toDo').hasError('minlength') || myForm.get('toDo').hasError('required') ? 'disabled' : 'enabled'"
+         [@openClose]="state"
+         (mouseover)="toggle($event)"
+    >Submit</button>
+  </form>
+</section>
