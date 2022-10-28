@@ -4,7 +4,7 @@ import {
   state,
   style,
   animate,
-  transition,
+  transition
 } from '@angular/animations';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -13,9 +13,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './next-level-valid.component.html',
   styleUrls: ['./next-level-valid.component.css'],
   animations: [
-    // notre animation
     trigger(
       'openClose', [
+        // state 1
         state(
           'axe',
           style({
@@ -23,18 +23,20 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
             left: '0px',
           })
         ),
+        //state 2
         state(
           'left',
           style({
             position: 'relative',
-            left: '-100px'
+            left: '-100px',
           })
         ),
+        //state 3
         state(
           'right',
           style({
             position: 'relative',
-            left: '100px'
+            left: '100px',
           })
         ),
         transition('left => axe', [animate('0.1s')]),
@@ -46,29 +48,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   ]
 })
 export class NextLevelValidComponent implements OnInit {
-  myForm: FormGroup;
+  //nothing happen
   state: string = 'axe';
-  innerWidth: any ; // largeur de notre ecran
+  innerWidth: any; // width of screan
+  myForm: FormGroup;
 
   constructor(private fb: FormBuilder) { }
-
-  toggle(event) {
-    if(this.myForm.get('toDo').hasError('minlength') || this.myForm.get('toDo').hasError('required')) {
-      let center = this.innerWidth / 2 ;
-      if(event.x > center + 40 || event.x < center - 40) {
-        this.state = 'axe';
-      } else {
-        if(event.x > center) {
-          this.state = 'left';
-        } else {
-          this.state = 'right';
-        }
-      }
-    } else {
-      this.state = 'axe';
-    }
-
-  }
 
   ngOnInit(): void {
     this.innerWidth = window.innerWidth;
@@ -76,5 +61,24 @@ export class NextLevelValidComponent implements OnInit {
       toDo: ['', [Validators.required, Validators.minLength(6)]]
     })
   }
+
+  toggle(event) {
+    let center = this.innerWidth / 2 ;
+    if(this.myForm.get('toDo').hasError('minlength')
+     || this.myForm.get('toDo').hasError('required')) {
+       if(event.x > center + 40 || event.x < center - 40) {
+         this.state = 'axe';
+       } else {
+         if(event.x > center)
+           this.state = 'left';
+         else
+           this.state = 'right';
+       }
+     } else {
+      this.state = 'axe';
+      // nice nice
+     }
+  }
+  // thanks for watching
 
 }
