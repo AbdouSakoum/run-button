@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+// let's start
+import  {
   trigger,
   state,
   style,
   animate,
   transition
 } from '@angular/animations';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-next-level-valid',
@@ -14,44 +15,45 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./next-level-valid.component.css'],
   animations: [
     trigger(
-      'openClose', [
+      'nextLevel', [
         // state 1
         state(
-          'axe',
+          'center',
           style({
             position: 'relative',
-            left: '0px',
+            left: '0px'
           })
         ),
-        //state 2
+        // state 2
         state(
           'left',
           style({
             position: 'relative',
-            left: '-100px',
+            left: '-100px'
           })
         ),
-        //state 3
+        // state 3
         state(
           'right',
           style({
             position: 'relative',
-            left: '100px',
+            left: '100px'
           })
         ),
-        transition('left => axe', [animate('0.1s')]),
-        transition('axe => left', [animate('0.1s')]),
-        transition('right => axe', [animate('0.1s')]),
-        transition('axe => right', [animate('0.1s')]),
+        transition('left => center', [animate('0.1s')]),
+        transition('center => left', [animate('0.1s')]),
+        transition('right => center', [animate('0.1s')]),
+        transition('center => right', [animate('0.1s')]),
       ]
     )
   ]
+
 })
 export class NextLevelValidComponent implements OnInit {
-  //nothing happen
-  state: string = 'axe';
-  innerWidth: any; // width of screan
   myForm: FormGroup;
+  statut: string = 'center';
+  innerWidth: any // width of screan
+
 
   constructor(private fb: FormBuilder) { }
 
@@ -65,20 +67,20 @@ export class NextLevelValidComponent implements OnInit {
   toggle(event) {
     let center = this.innerWidth / 2 ;
     if(this.myForm.get('toDo').hasError('minlength')
-     || this.myForm.get('toDo').hasError('required')) {
-       if(event.x > center + 40 || event.x < center - 40) {
-         this.state = 'axe';
-       } else {
-         if(event.x > center)
-           this.state = 'left';
-         else
-           this.state = 'right';
-       }
-     } else {
-      this.state = 'axe';
-      // nice nice
-     }
+    || this.myForm.get('toDo').hasError('required')) {
+      if(event.x > center + 40 || event.x < center - 40 )
+        this.statut = 'center';
+      else
+        if(event.x > center)
+          this.statut = 'left';
+        else
+          this.statut = 'right';
+    } else
+      this.statut = 'center';
+
   }
-  // thanks for watching
+  // that's nice
+  // sooo thank uuu for watching see u in a next video
+  // have a great day
 
 }
